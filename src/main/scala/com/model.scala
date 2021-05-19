@@ -1,0 +1,27 @@
+package com
+
+case class GenerateCodeRequest(controllers: Array[UIController]) {
+  def this() = this(null)
+}
+case class UIController(name: String, endPoints: Array[UIEndPoint]) {
+  def this() = this(null, null)
+}
+case class UIEndPoint(uri: String,
+                      methodName: String,
+                      apiMethod: String,
+                      request: Object,
+                      response: Object,
+                      requestMandatory: Array[String],
+                      responseMandatory: Array[String],
+                      service: ServiceEndPoint) {
+  def this() = this(null, null, null, null, null, null, null, null)
+}
+case class ServiceEndPoint(name: String, adaptors: Array[AdaptorEndPoint]) {
+  def this() = this(null, null)
+}
+case class AdaptorEndPoint(name: String, endPoints: Array[NextEndPoint]) {
+  def this() = this(null, null)
+}
+case class NextEndPoint(uri: String, request: Object, response: Object) {
+  def this() = this(null, null, null)
+}

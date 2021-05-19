@@ -1,0 +1,13 @@
+server:
+  port: 7777
+
+spring:
+  application:
+    name: application-creator
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

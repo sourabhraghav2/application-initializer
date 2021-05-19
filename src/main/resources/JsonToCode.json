@@ -1,0 +1,48 @@
+{
+  "controllers": [
+    {
+      "name": "DopaController",
+      "endPoints": [
+        {
+          "uri": "dopa/result",
+          "apiMethod": "GET",
+          "methodName": "DopaResult",
+          "request": {
+            "f_name": "Sourabh",
+            "l_name": "Raghav",
+            "age": 34
+          },
+          "response": {
+            "status": "success",
+            "code": 3000
+          },
+          "requestMandatory": [
+            "l_name"
+          ],
+          "responseMandatory": [
+            "code"
+          ],
+          "service": {
+            "name": "DopaResult",
+            "adaptors": [
+              {
+                "name": "KtcAdaptor",
+                "endPoints": [
+                  {
+                    "uri": "submit/dopa",
+                    "request": {
+                      "sample": "request"
+                    },
+                    "response": {
+                      "sample": "response"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
