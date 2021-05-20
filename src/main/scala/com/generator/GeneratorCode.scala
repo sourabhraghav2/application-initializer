@@ -7,11 +7,8 @@ import org.springframework.stereotype.Component
 @Component
 class GeneratorCode {
   private def generateControllers(className: String, str: String) = ""
-
   private def generateServices(className: String, str: String) = ""
-
   private def generateAdaptor(className: String, str: String) = ""
-
   def jsonToCode(request: GenerateCodeRequest): String = {
     request.controllers
       .map(each => {
@@ -27,14 +24,11 @@ class GeneratorCode {
         val endPoints = each.endPoints
           .map(each => {
             HardCode.CONTROLLER_ENDPOINT_TEMPLATE.toString
-              .replace(
-                METHOD_NAME,
-                each.apiMethod match {
-                  case method if method == ApiMethod.GET.toString => "GetMapping"
-                  case method if method == ApiMethod.POST.toString =>
-                    "PostMapping"
-                }
-              )
+              .replace(METHOD_NAME, each.apiMethod match {
+                case method if method == ApiMethod.GET.toString => "GetMapping"
+                case method if method == ApiMethod.POST.toString =>
+                  "PostMapping"
+              })
               .replace(URI_NAME, each.uri)
               .replace(
                 ENDPOINT_REQUEST,
@@ -64,9 +58,7 @@ class GeneratorCode {
       })
       .mkString("")
   }
-
 }
-
 //object GeneratorCode {
 //  def main(args: Array[String]): Unit = {
 //    print(Util.snakeToCamel("Sourabh-raghav", false))

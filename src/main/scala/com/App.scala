@@ -7,6 +7,5 @@ object App {
   def main(args: Array[String]): Unit =
     SpringApplication.run(classOf[App], args: _*)
 }
-
 @SpringBootApplication
 class App {}

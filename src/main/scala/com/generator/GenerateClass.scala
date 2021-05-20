@@ -1,14 +1,17 @@
 package com.generator
 
-import com.Constants.HardCode.{CLASS_STRUCTURE_TEMPLATE, JSON_PROPERTY_TEMPLATE, TYPE_DECLARATION_TEMPLATE}
+import com.Constants.HardCode.{
+  CLASS_STRUCTURE_TEMPLATE,
+  JSON_PROPERTY_TEMPLATE,
+  TYPE_DECLARATION_TEMPLATE
+}
 import com.Constants._
 import com.Util
 import com.fasterxml.jackson.databind.node.JsonNodeType._
 import com.fasterxml.jackson.databind.node.{JsonNodeFactory, ObjectNode}
 import com.fasterxml.jackson.databind.{JsonNode, ObjectMapper}
-import io.vavr.control.Option
 import org.springframework.stereotype.Component
-
+import io.vavr.control.Option
 @Component
 class GenerateClass {
   private val om = new ObjectMapper
@@ -16,22 +19,26 @@ class GenerateClass {
   def jsonToJavaClass(className: String, str: String): String = {
     val node = om.readTree(str)
 
-    val ss           = node.fieldNames
-    val classOuter   = new StringBuilder
+    val ss = node.fieldNames
+    val classOuter = new StringBuilder
     val classContent = new StringBuilder
     while (ss.hasNext()) {
       val key = ss.next
       val jsonProperty = Option
         .of(key)
-        .filter(each =>
-          each.toCharArray.toList
-            .sliding(2)
-            .count(a =>
-              Character.isUpperCase(a(0)) == true && Character
-                .isUpperCase(a(1)) == true
-            ) > 0 || each.contains("_")
+        .filter(
+          each =>
+            each.toCharArray.toList
+              .sliding(2)
+              .count(
+                a =>
+                  Character.isUpperCase(a(0)) == true && Character
+                    .isUpperCase(a(1)) == true
+              ) > 0 || each.contains("_")
         )
-        .map(each => JSON_PROPERTY_TEMPLATE.toString.replace(JSON_PROPERTY, each))
+        .map(
+          each => JSON_PROPERTY_TEMPLATE.toString.replace(JSON_PROPERTY, each)
+        )
         .getOrNull() match {
         case null => ""
         case o    => o
@@ -45,7 +52,8 @@ class GenerateClass {
             if NUMBER.toString == obj.getNodeType.toString && obj.toString
               .contains(".") =>
           "Double"
-        case obj if NUMBER.toString == obj.getNodeType.toString && obj.toString.length > 4 =>
+        case obj
+            if NUMBER.toString == obj.getNodeType.toString && obj.toString.length > 4 =>
           "Long"
         case obj if BOOLEAN.toString == obj.getNodeType.toString => "Boolean"
         case obj if ARRAY.toString == obj.getNodeType.toString =>
@@ -69,7 +77,10 @@ class GenerateClass {
         val newNode = JsonNodeFactory.instance.objectNode
         node
           .get(key)
-          .forEach((eachNode: JsonNode) => newNode.setAll(eachNode.asInstanceOf[ObjectNode]))
+          .forEach(
+            (eachNode: JsonNode) =>
+              newNode.setAll(eachNode.asInstanceOf[ObjectNode])
+          )
         classOuter.append(jsonToJavaClass(key, newNode.toString))
 
       }

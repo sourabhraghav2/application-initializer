@@ -48,11 +48,11 @@ object Constants {
         "}" + NEW_LINE
     )
     val CONTROLLER_ENDPOINT_TEMPLATE = Value(
-      "@" + METHOD_NAME + "(value = \"" + URI_NAME + "\", produces = MediaType.APPLICATION_JSON_VALUE)" + NEW_LINE +
-        "public " + ENDPOINT_RESPONSE + " " + METHOD_NAME + "(@RequestBody @Validated " + ENDPOINT_REQUEST + " request) {" + NEW_LINE +
-        "log.info(\"Inside " + URI_NAME + "\");" + NEW_LINE +
-        "return " + SERVICE_NAME + ".execute(request);" + NEW_LINE +
-        "}"
+      FIRST_INDENT_TAB + "@" + METHOD_NAME + "(value = \"" + URI_NAME + "\", produces = MediaType.APPLICATION_JSON_VALUE)" + NEW_LINE +
+        FIRST_INDENT_TAB + "public " + ENDPOINT_RESPONSE + " " + METHOD_NAME + "(@RequestBody @Validated " + ENDPOINT_REQUEST + " request) {" + NEW_LINE +
+        FIRST_INDENT_TAB + FIRST_INDENT_TAB + "log.info(\"Inside " + URI_NAME + "\");" + NEW_LINE +
+        FIRST_INDENT_TAB + FIRST_INDENT_TAB + "return " + SERVICE_NAME + ".execute(request);" + NEW_LINE +
+        FIRST_INDENT_TAB + "}"
     )
   }
 
