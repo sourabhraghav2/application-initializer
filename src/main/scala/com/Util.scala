@@ -2,7 +2,7 @@ package com
 
 object Util {
   def snakeToCamel(str: String, isFirstCharUpper: Boolean): String = {
-    var lowerCamelCase = str.toList
+    var lowerCamelCase = str.toLowerCase.toList
       .foldLeft(List.empty[Char]) {
         case ('_' :: xs, c) => c.toUpper :: xs
         case ('-' :: xs, c) => c.toUpper :: xs

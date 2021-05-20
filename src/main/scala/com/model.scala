@@ -1,5 +1,7 @@
 package com
 
+import com.fasterxml.jackson.databind.node.ObjectNode
+
 case class GenerateCodeRequest(controllers: Array[UIController]) {
   def this() = this(null)
 }
@@ -9,8 +11,8 @@ case class UIController(name: String, endPoints: Array[UIEndPoint]) {
 case class UIEndPoint(uri: String,
                       methodName: String,
                       apiMethod: String,
-                      request: Object,
-                      response: Object,
+                      request: ObjectNode,
+                      response: ObjectNode,
                       requestMandatory: Array[String],
                       responseMandatory: Array[String],
                       service: ServiceEndPoint) {

@@ -14,6 +14,7 @@ object Constants {
   var TYPE_LIST: String = "{typeList}"
   var ENDPOINT_LIST: String = "{endPointList}"
   var METHOD_NAME: String = "{methodName}"
+  var API_METHOD_NAME: String = "{apiMethodName}"
   var URI_NAME: String = "{uriName}"
   var ENDPOINT_RESPONSE: String = "{endpointResponse}"
   var ENDPOINT_REQUEST: String = "{endpointRequest}"
@@ -26,38 +27,7 @@ object Constants {
   }
   object HardCode extends Enumeration {
     type HardCode = Value
-    val JSON_PROPERTY_TEMPLATE = Value(
-      FIRST_INDENT_TAB + "@JsonProperty(\"" + JSON_PROPERTY + "\")\n"
-    )
-    val TYPE_DECLARATION_TEMPLATE = Value(
-      FIRST_INDENT_TAB + ACCESS_TYPE + " " + DATA_TYPE + " " + DATA_NAME + ";\n"
-    )
-    val CLASS_STRUCTURE_TEMPLATE = Value(
-      NEW_LINE + "class " + CLASS_NAME + "{" + NEW_LINE + CLASS_DEFINITION + NEW_LINE + " }"
-    )
-    val CONTROLLER_STRUCTURE_TEMPLATE = Value(
-      "@Api(tags = \"Controller\")" + NEW_LINE +
-        "@RestController" + NEW_LINE +
-        "@RequestMapping" + NEW_LINE +
-        "@Slf4j" + NEW_LINE +
-        "@AllArgsConstructor" + NEW_LINE +
-        "@AllArgsConstructor" + NEW_LINE +
-        "public class " + CLASS_NAME + " {" + NEW_LINE +
-        TYPE_LIST + NEW_LINE +
-        ENDPOINT_LIST + NEW_LINE +
-        "}" + NEW_LINE
-    )
-    val CONTROLLER_ENDPOINT_TEMPLATE = Value(
-      FIRST_INDENT_TAB + "@" + METHOD_NAME + "(value = \"" + URI_NAME + "\", produces = MediaType.APPLICATION_JSON_VALUE)" + NEW_LINE +
-        FIRST_INDENT_TAB + "public " + ENDPOINT_RESPONSE + " " + METHOD_NAME + "(@RequestBody @Validated " + ENDPOINT_REQUEST + " request) {" + NEW_LINE +
-        FIRST_INDENT_TAB + FIRST_INDENT_TAB + "log.info(\"Inside " + URI_NAME + "\");" + NEW_LINE +
-        FIRST_INDENT_TAB + FIRST_INDENT_TAB + "return " + SERVICE_NAME + ".execute(request);" + NEW_LINE +
-        FIRST_INDENT_TAB + "}"
-    )
-  }
 
-  def main(args: Array[String]): Unit = {
-    print(HardCode.CONTROLLER_STRUCTURE_TEMPLATE.toString)
   }
 
 }
