@@ -10,7 +10,7 @@ case class ControllerDefinition(name: String,
                                 endPoints: List[UIEndPoint]) {
 
   val CONTROLLER_STRUCTURE_TEMPLATE =
-    "@Api(tags = \"r\")" + NEW_LINE +
+    NEW_LINE + "@Api(tags = \"Controller\")" + NEW_LINE +
       "@RestController" + NEW_LINE +
       "@RequestMapping" + NEW_LINE +
       "@Slf4j" + NEW_LINE +
@@ -29,13 +29,15 @@ case class ControllerDefinition(name: String,
         stringBuilder.append(
           generateClass.jsonToJavaClass(
             Util.snakeToCamel(each.methodName + "Request", true),
-            each.request.toString
+            each.request.toString,
+            each.requestMandatory.toList
           )
         )
         stringBuilder.append(
           generateClass.jsonToJavaClass(
             Util.snakeToCamel(each.methodName + "Response", true),
-            each.response.toString
+            each.response.toString,
+            each.responseMandatory.toList
           )
         )
         stringBuilder.toString

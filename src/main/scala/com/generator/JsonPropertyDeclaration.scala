@@ -1,12 +1,14 @@
 package com.generator
 
-import com.Constants.{FIRST_INDENT_TAB, JSON_PROPERTY}
+import com.Constants.{FIRST_INDENT_TAB, JSON_PROPERTY, NEW_LINE}
 
 case class JsonPropertyDeclaration(propertyName: String) {
   val JSON_PROPERTY_TEMPLATE = FIRST_INDENT_TAB + "@JsonProperty(\"" + JSON_PROPERTY + "\")\n"
+
   def get(): String = {
     JSON_PROPERTY_TEMPLATE
       .replace(JSON_PROPERTY, propertyName)
+
   }
 }
 

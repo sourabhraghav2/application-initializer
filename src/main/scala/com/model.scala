@@ -24,6 +24,9 @@ case class ServiceEndPoint(name: String, adaptors: Array[AdaptorEndPoint]) {
 case class AdaptorEndPoint(name: String, endPoints: Array[NextEndPoint]) {
   def this() = this(null, null)
 }
-case class NextEndPoint(uri: String, request: Object, response: Object) {
-  def this() = this(null, null, null)
+case class NextEndPoint(name: String,
+                        uri: String,
+                        request: Object,
+                        response: Object) {
+  def this() = this(null, null, null, null)
 }

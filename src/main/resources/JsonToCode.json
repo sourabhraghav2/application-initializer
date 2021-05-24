@@ -1,12 +1,12 @@
 {
   "controllers": [
     {
-      "name": "DopaController",
+      "name": "MyController",
       "endPoints": [
         {
-          "uri": "dopa/result",
+          "uri": "college/result",
           "apiMethod": "GET",
-          "methodName": "DopaResult",
+          "methodName": "MyResult",
           "request": {
             "f_name": "Sourabh",
             "l_name": "Raghav",
@@ -14,7 +14,7 @@
           },
           "response": {
             "status": "success",
-            "code": 3000
+            "code": 3222
           },
           "requestMandatory": [
             "l_name"
@@ -23,13 +23,13 @@
             "code"
           ],
           "service": {
-            "name": "DopaResult",
+            "name": "MyResult",
             "adaptors": [
               {
-                "name": "KtcAdaptor",
+                "name": "FutureAdaptor",
                 "endPoints": [
                   {
-                    "uri": "submit/dopa",
+                    "uri": "submit/my",
                     "request": {
                       "sample": "request"
                     },

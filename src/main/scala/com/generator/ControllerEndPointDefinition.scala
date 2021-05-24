@@ -2,7 +2,6 @@ package com.generator
 
 import com.Constants._
 import com.{ServiceEndPoint, Util}
-import org.springframework.beans.factory.annotation.Autowired
 
 case class ControllerEndPointDefinition(apiMethod: String,
                                         uri: String,

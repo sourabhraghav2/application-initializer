@@ -12,31 +12,36 @@ class GenerateClass {
 
   private val om = new ObjectMapper
 
-  def jsonToJavaClass(className: String, str: String): String = {
+  def jsonToJavaClass(
+    className: String,
+    str: String,
+    mandatoryParameterList: List[String] = List.empty
+  ): String = {
     val node = om.readTree(str)
-
-    val ss = node.fieldNames
+    val mandatoryClass = !mandatoryParameterList.isEmpty
+    val keys = node.fieldNames
     val classOuter = new StringBuilder
     val classContent = new StringBuilder
-    while (ss.hasNext()) {
-      val key = ss.next
-      val jsonProperty = Option
-        .of(key)
-        .filter(
-          each =>
-            each.toCharArray.toList
-              .sliding(2)
-              .count(
-                a =>
-                  Character.isUpperCase(a(0)) == true && Character
-                    .isUpperCase(a(1)) == true
-              ) > 0 || each.contains("_")
-        )
-        .map(each => JsonPropertyDeclaration(each).get)
-        .getOrNull() match {
-        case null => ""
-        case o    => o
-      }
+    while (keys.hasNext()) {
+      val key = keys.next
+      val jsonProperty =
+        Option
+          .of(key)
+          .filter(
+            each =>
+              each.toCharArray.toList
+                .sliding(2)
+                .count(
+                  a =>
+                    Character.isUpperCase(a(0)) == true && Character
+                      .isUpperCase(a(1)) == true
+                ) > 0 || each.contains("_")
+          )
+          .map(each => JsonPropertyDeclaration(each).get)
+          .getOrNull() match {
+          case null => ""
+          case o    => o
+        }
       val newKey = Util.snakeToCamel(key.toLowerCase(), false)
 
       val dataType = node.get(key) match {
@@ -59,7 +64,13 @@ class GenerateClass {
       }
       classContent
         .append(jsonProperty)
-        .append(TypeDeclaration(dataType, newKey).get)
+        .append(
+          TypeDeclaration(
+            dataType,
+            newKey,
+            mandatoryParameterList.contains(key)
+          ).get
+        )
       if (OBJECT.toString == node.get(key).getNodeType.toString) {
         classOuter.append(jsonToJavaClass(key, node.get(key).toString))
       } else if (ARRAY.toString == node.get(key).getNodeType.toString) {
@@ -74,7 +85,9 @@ class GenerateClass {
 
       }
     }
-    classOuter.append(ClassDefinition(className, classContent.toString).get())
+    classOuter.append(
+      ClassDefinition(className, classContent.toString, mandatoryClass).get()
+    )
     print(classOuter.toString)
     classOuter.toString
   }
