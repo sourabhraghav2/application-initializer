@@ -1,72 +1,82 @@
 package com.generator
 
 import com.Constants._
-import com.{GenerateCodeRequest, Util}
+import com.{
+  GenerateCodeRequest,
+  NextEndPoint,
+  ServiceEndPoint,
+  UIController,
+  Util
+}
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class GeneratorCode {
-  private def generateControllers(className: String, str: String) = ""
-
-  private def generateServices(className: String, str: String) = ""
-
-  private def generateAdaptor(className: String, str: String) = ""
-
-  def jsonToCode(request: GenerateCodeRequest): String = {
-    request.controllers
-      .map(each => {
-        val services = each.endPoints
-          .map(_.service)
-          .map(each => {
-            HardCode.TYPE_DECLARATION_TEMPLATE.toString
-              .replace(ACCESS_TYPE, "private")
-              .replace(DATA_TYPE, Util.snakeToCamel(each.name, true))
-              .replace(DATA_NAME, Util.snakeToCamel(each.name, false))
-          })
-          .mkString("")
-        val endPoints = each.endPoints
-          .map(each => {
-            HardCode.CONTROLLER_ENDPOINT_TEMPLATE.toString
-              .replace(
-                METHOD_NAME,
-                each.apiMethod match {
-                  case method if method == ApiMethod.GET.toString => "GetMapping"
-                  case method if method == ApiMethod.POST.toString =>
-                    "PostMapping"
-                }
-              )
-              .replace(URI_NAME, each.uri)
-              .replace(
-                ENDPOINT_REQUEST,
-                Util.snakeToCamel(each.methodName + "Request", true)
-              )
-              .replace(
-                ENDPOINT_RESPONSE,
-                Util.snakeToCamel(each.methodName + "Response", true)
-              )
-              .replace(URI_NAME, Util.snakeToCamel(each.methodName, true))
-              .replace(
-                SERVICE_NAME,
-                Util.snakeToCamel(each.service.name, false)
-              )
-
-          })
-          .mkString("")
-
-        each.name.isEmpty match {
-          case false =>
-            HardCode.CONTROLLER_STRUCTURE_TEMPLATE.toString
-              .replace(CLASS_NAME, each.name)
-              .replace(TYPE_LIST, services)
-              .replace(ENDPOINT_LIST, endPoints)
-          case true => ""
-        }
-      })
-      .mkString("")
+class GeneratorCode(implicit @Autowired generateClass: GenerateClass) {
+  private def generateControllers(name: String, ctrl: UIController): String = {
+    val res = name.isEmpty match {
+      case false =>
+        ControllerDefinition(
+          ctrl.name,
+          ctrl.endPoints
+            .map(_.service)
+            .toList,
+          ctrl.endPoints.toList
+        ).get
+      case true => ""
+    }
+    print("generateControllers: " + res)
+    res
   }
 
-}
+  private def generateServices(service: ServiceEndPoint, methodName: String) = {
+    val res = SERVICE_INTERFACE.concat(
+      NEW_LINE.concat(ServiceAndImplDefinition(service, methodName).get())
+    )
+    print("generateServices: " + res)
+    res
+  }
 
+  private def generateAdaptor(name: String,
+                              adaptors: List[NextEndPoint]): String = {
+    val res = (new StringBuilder)
+      .append(
+        InterfaceDefinition(
+          name,
+          adaptors
+            .map(each => each.name)
+            .map(each => MethodDefinition(each).get)
+            .mkString(NEW_LINE)
+        ).get
+      )
+      .toString
+    res
+  }
+
+  def jsonToCode(request: GenerateCodeRequest): String = {
+    val res = (new StringBuilder)
+      .append(
+        request.controllers
+          .flatMap(_.endPoints)
+          .map(
+            endPoint => generateServices(endPoint.service, endPoint.methodName)
+          )
+          .mkString(NEW_LINE)
+      )
+      .append(
+        request.controllers
+          .flatMap(_.endPoints)
+          .map(_.service)
+          .flatMap(_.adaptors)
+          .map(
+            adaptor => generateAdaptor(adaptor.name, adaptor.endPoints.toList)
+          )
+          .mkString(NEW_LINE)
+      )
+      .toString()
+    res
+  }
+}
 //object GeneratorCode {
 //  def main(args: Array[String]): Unit = {
 //    print(Util.snakeToCamel("Sourabh-raghav", false))

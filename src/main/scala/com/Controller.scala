@@ -2,7 +2,12 @@ package com
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.{GetMapping, PostMapping, RequestBody, RestController}
+import org.springframework.web.bind.annotation.{
+  GetMapping,
+  PostMapping,
+  RequestBody,
+  RestController
+}
 
 @RestController
 class Controller(@Autowired service: CodeGeneratorService) {

@@ -1,0 +1,45 @@
+plugins {
+    id "java"
+    id "scala"
+    id "org.springframework.boot" version "1.5.19.RELEASE"
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+}
+
+ext.scala_version = '2.12.8'
+ext.jackson_version = '2.9.8'
+ext['jackson.version'] = jackson_version
+
+version = '1.5.19'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+def defaultEncoding = 'UTF-8'
+tasks.withType(AbstractCompile).each { it.options.encoding = defaultEncoding }
+
+test {
+    include '**/util/**', '**/context/**'
+}
+
+springBoot {
+    executable = true
+    buildInfo()
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation "io.vavr:vavr:0.10.0"
+    implementation "org.scala-lang:scala-compiler:${scala_version}"
+    implementation "org.scala-lang:scala-library:${scala_version}"
+
+    implementation "com.fasterxml.jackson.module:jackson-module-scala_2.12:${jackson_version}"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+
+}
+
+wrapper {
+    gradleVersion = '5.1.1'
+}

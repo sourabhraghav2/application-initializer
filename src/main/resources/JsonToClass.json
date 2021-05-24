@@ -1,26 +1,15 @@
 {
-  "hospital":{
-    "hospital_code":"00000",
-    "hospital_name":"โรงพยาบาลทดสอบระบบ",
-    "his_identifier" : "HIS ABC v1.0"
+  "man":{
+    "hospital":"type0",
+    "is_identifier" : true
   },
-  "patient":{
-    "CID":"0030700084500",
-    "hn":"990029982",
-    "patient_guid":"{73F287FF-5924-435F-B80A-8993A1349DAE}",
-    "prefix":"นาย",
-    "first_name":"ทดสอบ",
-    "last_name":"ระบบ",
+  "college":{
+    "prefix":"sourabh",
+    "first_name":"Raghav",
+    "last_name":"Raghav",
     "gender":1,
-    "birth_date":"1984-10-12",
-    "marital_status_id":3,
-    "address":"22",
-    "moo":"2",
+    "birth_date":"1994-10-12",
     "road":"",
-    "chw_code":"20",
-    "amp_code":"04",
-    "tmb_code":"05",
-    "installed_line_connect":"Y",
     "home_phone":"0277777777",
     "mobile_phone":"",
     "ncd":[
@@ -30,92 +19,42 @@
   "lab":[
 
   ],
-  "immunization_plan":[
+  "fee_plan":[
     {
-      "vaccine_code":"C19",
-      "immunization_plan_ref_code":"18",
-      "treatment_plan_name":"Vaccine COVID-19",
-      "practitioner_license_number":"ท.1234567",
-      "practitioner_name":"LAB",
-      "practitioner_role":"แพทย์",
-      "vaccine_ref_name":"วัคซีน Covid 19 - ซิโนแวค",
-      "schedule":[
+      "practitioner_name":"Vinay",
+      "practitioner_role":"Admin",
+      "line":[
         {
-          "immunization_plan_schedule_ref_code":"33",
-          "schedule_date":"2021-01-25",
-          "treatment_number":1,
-          "schedule_description":"ให้ Vaccine COVID-19 เข็มแรก",
+
+          "date":"2020-01-25",
+          "number":1,
+          "description":"send",
           "complete":"Y",
           "visit_date":"2021-01-25"
-        },
-        {
-          "immunization_plan_schedule_ref_code":"34",
-          "schedule_date":"2021-02-24",
-          "treatment_number":2,
-          "schedule_description":"ให้ Vaccine COVID-19 เข็มที่ 2",
-          "complete":"N"
         }
       ]
     }
   ],
-  "visit":{
-    "visit_guid":"{8A4298CF-6E0C-4338-926F-ACDDECF454FF}",
-    "visit_ref_code":"640125141902",
-    "visit_datetime":"2021-01-25T14:19:02.000",
-    "claim_fund_pcode":"A2",
-    "visit_observation":{
-      "systolic_blood_pressure":120,
-      "diastolic_blood_pressure":80,
-      "body_weight_kg":65,
-      "body_height_cm":165,
+  "go":{
+
+    "code":"68687",
+    "go_datetime":"2021-01-25T14:19:02.000",
+    "ungo_observation":{
+      "weight_kg":65,
+      "height_cm":165,
       "temperature":37.5
     },
-    "visit_immunization":[
-      {
-        "visit_immunization_ref_code":"70",
-        "immunization_datetime":"2021-01-26T13:30:29.000",
-        "vaccine_code":"C19",
-        "lot_number":"TestABCDE",
-        "expiration_date":"2024-01-26",
-        "vaccine_note":"test",
-        "vaccine_ref_name":"วัคซีน Covid 19 - ซิโนแวค",
-        "serial_no":"1234567890",
-        "vaccine_manufacturer" : "Sinovac Life Sciences" ,
 
-        "vaccine_plan_no":1,
-        "vaccine_route_name":"ฉีดเข้ากล้ามเนื้อ (Intramuscular)",
-        "practitioner":{
-          "license_number":"ท.1234567",
-          "name":"นพ.ทดสอบ",
-          "role":"แพทย์"
-        },
-        "immunization_plan_ref_code":"18",
-        "immunization_plan_schedule_ref_code":"33"
+    "react":[
+      {
+        "id":4
       }
     ],
-    "visit_immunization_reaction":[
+    "meet":[
       {
-        "visit_immunization_reaction_ref_code":"17",
-        "visit_immunization_ref_code":"70",
-        "report_datetime":"2021-01-26T17:13:16.000",
-        "reaction_detail_text":"ปวดศีรษะ (Headache) : test",
-        "vaccine_reaction_type_id":2,
-        "reaction_date":"2021-01-26",
-        "vaccine_reaction_stage_id":2,
-        "vaccine_reaction_symptom_id":4
-      }
-    ],
-    "appointment":[
-      {
-        "appointment_ref_code":"710378",
-        "appointment_datetime":"2021-02-24T09:00:00.000",
-        "appointment_note":"หมายเหตุ",
-        "appointment_cause":"นัดมารับวัคซีนเข็ม 2",
-        "provis_aptype_code":"C19",
+        "code":"C19",
         "practitioner":{
-          "license_number":"ท.1234567",
-          "name":"นพ.ทดสอบ",
-          "role":"แพทย์"
+          "role":"data"
         }
       }
     ]
